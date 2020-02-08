@@ -1,44 +1,21 @@
-module.exports = {
-    success: payload => ({ payload }),
-    validationError: (message, validation) => {
-        console.error(`${new Date()}: ${message}`)
+module.exports = errorHandler;
 
-        return {
-            status: 400,
-            error: {
-                message,
-                validation
-            }
-        }
-    },
-    accessError: (message) => {
-        console.error(`${new Date()}: ${message}`)
-
-        return {
-            status: 403,
-            error: {
-                message: message
-            }
-        }
-    },
-    notFoundError: (message) => {
-        console.error(`${new Date()}: ${message}`)
-
-        return {
-            status: 404,
-            error: {
-                message: message
-            }
-        }
-    },
-    unknownError: (message, status = 500) => {
-        console.error(`${new Date()}: ${message}`)
-
-        return {
-            status,
-            error: {
-                message: message
-            }
-        }
+function errorHandler(err, req, res, next) {
+    if (typeof (err) === 'string') {
+        return res.status(400).json({ message: err });
     }
+
+    if (err.name === 'ValidationError') {
+        return res.status(400).json({ message: err.message });
+    }
+
+    if (err.name === 'UnauthorizedError') {
+        return res.status(401).json({ message: 'Invalid Token' });
+    }
+
+    if(err.name === 'PermissionError') {
+        return res.status(403).json({ message: err.message });
+    }
+
+    return res.status(500).json({ message: err.message });
 }
