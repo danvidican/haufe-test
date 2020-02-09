@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// import userActions from '../actions/userActions';
+import userActions from '../actions/userActions';
 import autobind from 'react-autobind';
 
  class UsersPanelContainer extends Component {
+
+  componentDidMount() {
+    this.props.dispatch(userActions.getAll());
+  }
 
   constructor(props) {
     super(props)
@@ -14,6 +18,7 @@ import autobind from 'react-autobind';
   }
 
   render() {
+    console.log("users =>> " + this.props.users);
     return (
       <div>
         <h1>UserPanelContainer</h1>
@@ -23,9 +28,11 @@ import autobind from 'react-autobind';
 }
 
 function mapStateToProps(state) {
-  const {dispatch} = state
+  const { users, authentication } = state;
+  const { user } = authentication;
   return {
-    dispatch
+      user,
+      users
   };
 }
 

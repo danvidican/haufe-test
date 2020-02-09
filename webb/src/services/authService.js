@@ -49,9 +49,31 @@ function logout() {
     localStorage.removeItem('user');
 }
 
+function getAll() {
+    const token = JSON.parse(localStorage.getItem('user')).token;
+
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'x-auth-token': token
+        }
+    };
+
+    return fetch(`${config.apiUrl}/users/`, requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                throw Error('Request was rejected with status' + response.status);
+            }
+            return response.json();
+        })
+}
+
 
 export default {
     login,
     register,
-    logout
+    logout,
+    getAll
 }
