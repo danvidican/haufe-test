@@ -8,7 +8,7 @@ export function users(state = {}, action) {
       };
     case userConstants.GETALL_SUCCESS:
       return {
-        items: action.users
+        users: action.users
       };
     case userConstants.GETALL_FAILURE:
       return { 

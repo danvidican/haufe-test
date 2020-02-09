@@ -45,6 +45,26 @@ function register(username, password) {
         })
 }
 
+function deleteUser(userId) {
+    const token = JSON.parse(localStorage.getItem('user')).token;
+    console.log("delet=>> " + userId);
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'x-auth-token': token
+        }   
+    };
+
+    return fetch(`${config.apiUrl}/users/delete/` + userId, requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                throw Error('Request was rejected with status' + response.status);
+            }
+        })
+}
+
 function logout() {
     localStorage.removeItem('user');
 }
@@ -75,5 +95,6 @@ export default {
     login,
     register,
     logout,
-    getAll
+    getAll,
+    deleteUser
 }

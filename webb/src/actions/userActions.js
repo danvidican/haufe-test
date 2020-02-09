@@ -5,7 +5,8 @@ const userActions = {
     login,
     logout,
     getAll,
-    register
+    register,
+    deleteUser
 };
 
 export default userActions;
@@ -39,6 +40,17 @@ function register(username, password) {
             });
     };
 
+}
+
+function deleteUser(userId) {
+    return dispatch => {
+        userService.deleteUser(userId)
+            .then(resp => {
+            })
+            .catch(error => {
+                console.log("error at delete user action" + error);
+            });
+    };
 }
 
 function logout() {
