@@ -16,7 +16,7 @@ import autobind from 'react-autobind';
   onLogout(event) {
     event.preventDefault()
     this.props.dispatch(userActions.logout());
-}
+  }
 
   render() {
     return (

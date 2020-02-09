@@ -51,7 +51,7 @@ class RegisterContainer extends Component {
                         <form>
                             <div className="form-group">
                                 <label>Username</label>
-                                <input type="email" className="form-control" aria-describedby="emailHelp" placeholder="Enter email" value={username}
+                                <input type="email" className="form-control" aria-describedby="emailHelp" placeholder="Enter username" value={username}
                                     onChange={this.onUsernameChange} />
                             </div>
 

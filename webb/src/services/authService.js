@@ -27,14 +27,14 @@ function login(username, password) {
         })
 }
 
-function register(username, password) {
+function register(username, password, role = 'internal') {
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password, role })
     };
 
     return fetch(`${config.apiUrl}/users/register`, requestOptions)

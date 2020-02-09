@@ -30,9 +30,9 @@ function login(username, password) {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-function register(username, password) {
+function register(username, password, role = 'internal') {
     return dispatch => {
-        userService.register(username, password)
+        userService.register(username, password, role)
             .then(resp => {
             })
             .catch(error => {
