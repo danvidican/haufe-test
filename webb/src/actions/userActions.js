@@ -4,7 +4,7 @@ import {history } from '../helpers';
 
 const userActions = {
     login,
-    // logout,
+    logout,
     // getAll
 };
 
@@ -31,10 +31,10 @@ function login(username, password) {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-// function logout() {
-//     userService.logout();
-//     return { type: userConstants.LOGOUT };
-// }
+function logout() {
+    userService.logout();
+    return { type: userConstants.LOGOUT };
+}
 
 // function getAll() {
 //     return dispatch => {

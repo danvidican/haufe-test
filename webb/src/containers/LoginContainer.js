@@ -28,16 +28,12 @@ class LoginContainer extends Component {
     onLogin(event) {
         event.preventDefault()
         const { username, password } = this.state
-        console.log("onLogin =>> " + username + " " + password);
         this.props.dispatch(userActions.login(username, password));
     }
-
 
     render() {
 
         const { username, password } = this.state
-
-
         return (
             <div>
                 <div id="login">

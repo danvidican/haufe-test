@@ -20,7 +20,12 @@ function login(username, password) {
         });
 }
 
+function logout(){
+    localStorage.removeItem('user');
+}
+
 
 export default {
-    login
+    login,
+    logout
 }
