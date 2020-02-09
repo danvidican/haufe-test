@@ -7,6 +7,7 @@ const userService = require('./user_service');
 router.post('/login', authenticate);
 router.post('/register', register);
 router.get('/', internalUserVerification, getAllUsers);
+router.post('/delete/:id', internalUserVerification, deleteUser);
 
 function authenticate(req, res, next) {
     userService.authenticate(req.body)
@@ -23,6 +24,12 @@ function register(req, res, next) {
 function getAllUsers(req, res, next) {
     userService.getAllUsers(req.body)
         .then((users) => res.json({users}))
+        .catch(err => next(err));
+}
+
+function deleteUser(req, res, next) {
+    userService.deleteUser(req.params.id)
+        .then(() => res.json({}))
         .catch(err => next(err));
 }
 
