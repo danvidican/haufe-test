@@ -1,7 +1,7 @@
 
 
 const config = {
-    apiUrl: "http://localhost:4000"
+    apiUrl: "http://localhost:8080"
 }
 
 function login(username, password) {
