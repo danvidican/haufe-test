@@ -37,6 +37,12 @@ async function create(userParam) {
     await user.save();
 }
 
+
+async function deleteUser(userId) {
+    await User.findOneAndRemove({ _id: userId });
+}
+
+
 async function getAllUsers() {
     const users = await User.find({role: 'external'});
     if(users) {
@@ -47,6 +53,8 @@ async function getAllUsers() {
         return newUsers
     } 
 }
+
+
 
 async function isInternalMiddleWare(req) {
     const userParam = req.body;
@@ -67,5 +75,6 @@ module.exports = {
     authenticate,
     create,
     getAllUsers,
-    isInternalMiddleWare
+    isInternalMiddleWare,
+    deleteUser
 };
