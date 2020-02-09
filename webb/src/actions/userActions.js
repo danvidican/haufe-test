@@ -1,6 +1,6 @@
 import { userConstants } from '../constants';
-import  userService  from '../services/authService';
-import {history } from '../helpers';
+import userService from '../services/authService';
+import { history } from '../helpers';
 
 const userActions = {
     login,
@@ -15,15 +15,14 @@ function login(username, password) {
         dispatch(request({ username }));
 
         userService.login(username, password)
-            .then(
-                user => { 
-                    dispatch(success(user));
+            .then(resp => {
+                    dispatch(success(resp));
                     history.push('/');
-                },
-                error => {
-                    dispatch(failure(error));
-                }
-            );
+            })
+            .catch(error => {
+                console.log("err login actions");
+                dispatch(failure(error));
+            });
     };
 
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import userActions from '../actions/userActions';
 import autobind from 'react-autobind';
 
-class HomeContainer extends Component {
+ class HomeContainer extends Component {
 
   constructor(props) {
     super(props)
@@ -13,7 +13,7 @@ class HomeContainer extends Component {
 
   }
 
-  onLogin(event) {
+  onLogout(event) {
     event.preventDefault()
     this.props.dispatch(userActions.logout());
 }
@@ -22,9 +22,9 @@ class HomeContainer extends Component {
     return (
       <div>
         <h1>Home</h1>
-        
+
         <button type="submit" className="btn-dark btn-lg btn-block"
-          onClick={this.onLogin}> Log out
+          onClick={this.onLogout}> Log out
         </button>
       </div>
     )
@@ -33,11 +33,9 @@ class HomeContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const { users, authentication } = state;
-  const { user } = authentication;
+  const {dispatch} = state
   return {
-    user,
-    users
+    dispatch
   };
 }
 

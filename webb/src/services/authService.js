@@ -1,26 +1,36 @@
 
+
 const config = {
     apiUrl: "http://localhost:4000"
 }
 
 function login(username, password) {
-    console.log("login service =>> " + username + " " + password);
     const requestOptions = {
         method: 'POST',
-        headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
         body: JSON.stringify({ username, password })
     };
-
+ 
     return fetch(`${config.apiUrl}/users/login`, requestOptions)
-        .then(resp => { return resp.json(); }).then((user) => {
+        .then(response => {
+            if (response.status === 401) {
+                throw Error('Request was rejected with status' + 401);
+            }
+            return response.json()
+        })
+        .then(user => {
             localStorage.setItem('user', JSON.stringify(user));
             return user;
-        });
+        })
+
+
+    
 }
 
-function logout(){
+function logout() {
     localStorage.removeItem('user');
 }
 
