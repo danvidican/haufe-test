@@ -37,8 +37,15 @@ async function create(userParam) {
     await user.save();
 }
 
-async function testRole(userParam) {
-    const user = await User.findOne({ username: userParam.username });
+async function getAllUsers() {
+    const users = await User.find({});
+    if(users) {
+        const newUsers = users.map(u => {
+            const {hash, ...userWithoutHash} = u.toObject();
+            return userWithoutHash;
+        })
+        return newUsers
+    } 
 }
 
 async function isInternalMiddleWare(req) {
@@ -59,6 +66,6 @@ async function isInternalMiddleWare(req) {
 module.exports = {
     authenticate,
     create,
-    testRole,
+    getAllUsers,
     isInternalMiddleWare
 };
