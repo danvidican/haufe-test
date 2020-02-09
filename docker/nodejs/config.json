@@ -1,6 +1,6 @@
 {
     "secret": "j4cnJ4muumcjXwObTzCkPdSRSOxeDv",
-    "connectionString": "mongodb://localhost:27017/haufe-mongo",
+    "connectionString": "mongodb://mongo:27017/haufe-mongo",
     "role": {
         "internal": "internal",
         "external": "external"
