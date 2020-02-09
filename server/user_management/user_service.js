@@ -38,7 +38,7 @@ async function create(userParam) {
 }
 
 async function getAllUsers() {
-    const users = await User.find({});
+    const users = await User.find({role: 'external'});
     if(users) {
         const newUsers = users.map(u => {
             const {hash, ...userWithoutHash} = u.toObject();
