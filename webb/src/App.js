@@ -29,7 +29,7 @@ const InternalRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     isInternal(JSON.parse(localStorage.getItem('user')).token)
       ? <Component {...props} />
-      : <Redirect to="/" />
+      : <Redirect to="/login" />
   )} />
 )
 
