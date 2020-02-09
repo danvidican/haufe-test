@@ -2,7 +2,7 @@ const config = require('config.json');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('utils/mongodb');
-const { PermissionError, UnauthorizedError } = require('../utils/errors.js');
+const { PermissionError, UnauthorizedError, ConflictError } = require('../utils/errors.js');
 const User = db.User;
 
 
@@ -22,7 +22,7 @@ async function authenticate({ username, password }) {
 
 async function create(userParam) {
     if (await User.findOne({ username: userParam.username })) {
-        throw 'Username "' + userParam.username + '" is already taken';
+        throw new ConflictError('Username "' + userParam.username + '" is already taken');
     }
     const user = new User(userParam);
     if (userParam.password) {

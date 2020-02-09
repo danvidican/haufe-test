@@ -14,6 +14,10 @@ function errorHandler(err, req, res, next) {
         return res.status(401).json({ message: message });
     }
 
+    if(err.name === 'ConflictError') {
+        return res.status(409).json({ message: err.message });
+    }
+
     if(err.name === 'PermissionError') {
         return res.status(403).json({ message: err.message });
     }

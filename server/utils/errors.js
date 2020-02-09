@@ -1,7 +1,7 @@
-class ValidationError extends Error {
+class ConflictError extends Error {
     constructor(message) {
         super(message)
-        this.name = 'ValidationError'
+        this.name = 'ConflictError'
         this.message = message
     }
 }
@@ -30,7 +30,7 @@ class UnauthorizedError extends Error {
 
 
 module.exports = {
-    ValidationError,
+    ConflictError,
     PermissionError,
     DatabaseError,
     UnauthorizedError
