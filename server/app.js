@@ -1,3 +1,5 @@
+'use strict';
+
 require('rootpath')();
 const express = require('express');
 const app = express();
@@ -18,7 +20,9 @@ app.use('/users', require('./user_management/user_controller.js'));
 
 app.use(errorHandler);
 
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
-const server = app.listen(port, function () {
+const port = 8080;
+const host = '0.0.0.0';
+
+app.listen(port, host, function () {
     console.log('Server listening on port ' + port);
 });
