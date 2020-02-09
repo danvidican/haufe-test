@@ -3,6 +3,7 @@ import { HashRouter } from 'react-router-dom'
 import { Switch, Route, Redirect } from 'react-router'
 import    Home  from "../containers/HomeContainer.js";
 import  LoginContainer  from "../containers/LoginContainer.js";
+import {history } from '../helpers';
 
 const PublicRoute = ({ component: Component, user, ...rest }) => (
   <Route {...rest} render={props => (
@@ -18,10 +19,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       : <Redirect to="/login" />
   )} />
 )
+
 export default class App extends Component {
   render() {
     return (
-        <HashRouter>
+        <HashRouter history={history}>
           <div>
             <Switch>
               <PublicRoute path='/login' exact component={LoginContainer} />

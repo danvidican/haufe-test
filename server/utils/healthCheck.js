@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/healthcheck', function (req, res, next) {
     if( mongoose.connection.readyState === 1){
-        res.json({ server: 'UP', mongoDb: "Up" });
+        res.json({ server: 'UP', mongoDb: "UP" });
     } else {
         res.status(500).json({ message: 'Internal server error' });
     }

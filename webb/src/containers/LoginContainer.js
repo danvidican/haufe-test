@@ -1,16 +1,73 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import autobind from 'react-autobind';
 
-// import LoginCheck from './containers/LoginCheckContainer';
+import userActions from '../actions/userActions';
 
 class LoginContainer extends Component {
-  render() {
-    return (
-      <div>
-          <h1>Login</h1>
-      </div>
-    )
-  }
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            username: "",
+            password: ""
+        }
+
+        autobind(this)
+    }
+
+    onUserNameChange(event) {
+        this.setState({ username: event.target.value })
+    }
+
+    onPasswordChange(event) {
+        this.setState({ password: event.target.value })
+    }
+
+    onLogin(event) {
+        event.preventDefault()
+        const { username, password } = this.state
+        console.log("onLogin =>> " + username + " " + password);
+        this.props.dispatch(userActions.login(username, password));
+    }
+
+
+    render() {
+
+        const { username, password } = this.state
+
+
+        return (
+            <div>
+                <div id="login">
+                    <div className="container">
+                        <h1 className="text-center">Login to your account</h1>
+                        <div className="login-form-container">
+                            <hr />
+                            <form>
+                                <div className="form-group">
+                                    <label>Username</label>
+                                    <input type="email" className="form-control" aria-describedby="emailHelp" placeholder="Enter username" value={username}
+                                        onChange={this.onUserNameChange} />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Password</label>
+                                    <input type="password" className="form-control" placeholder="Password" value={password}
+                                        onChange={this.onPasswordChange} />
+                                </div>
+
+                                <button type="submit" className="btn-dark btn-lg btn-block"
+                                    onClick={this.onLogin}>Login</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        )
+    }
 
 }
 
