@@ -13,7 +13,7 @@ function login(username, password) {
         },
         body: JSON.stringify({ username, password })
     };
- 
+
     return fetch(`${config.apiUrl}/users/login`, requestOptions)
         .then(response => {
             if (response.status === 401) {
@@ -25,9 +25,24 @@ function login(username, password) {
             localStorage.setItem('user', JSON.stringify(user));
             return user;
         })
+}
 
+function register(username, password) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    };
 
-    
+    return fetch(`${config.apiUrl}/users/register`, requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                throw Error('Request was rejected with status' + response.status);
+            }
+        })
 }
 
 function logout() {
@@ -37,5 +52,6 @@ function logout() {
 
 export default {
     login,
+    register,
     logout
 }

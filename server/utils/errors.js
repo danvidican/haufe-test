@@ -20,8 +20,18 @@ class DatabaseError extends Error {
     }
 }
 
+class UnauthorizedError extends Error {
+    constructor(message) {
+        super(message)
+        this.name = 'UnauthorizedError'
+        this.message = message
+    }
+}
+
+
 module.exports = {
     ValidationError,
     PermissionError,
-    DatabaseError
+    DatabaseError,
+    UnauthorizedError
   }

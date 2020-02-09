@@ -1,11 +1,10 @@
 import { userConstants } from '../constants';
 import userService from '../services/authService';
-import { history } from '../helpers';
 
 const userActions = {
     login,
     logout,
-    // getAll
+    register
 };
 
 export default userActions;
@@ -17,7 +16,6 @@ function login(username, password) {
         userService.login(username, password)
             .then(resp => {
                     dispatch(success(resp));
-                    history.push('/');
             })
             .catch(error => {
                 console.log("err login actions");
@@ -28,6 +26,18 @@ function login(username, password) {
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
     function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
+
+function register(username, password) {
+    return dispatch => {
+        userService.register(username, password)
+            .then(resp => {
+            })
+            .catch(error => {
+                console.log("error at register action"+ error);
+            });
+    };
+
 }
 
 function logout() {

@@ -2,7 +2,7 @@ const config = require('config.json');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('utils/mongodb');
-const { PermissionError } = require('../utils/errors.js');
+const { PermissionError, UnauthorizedError } = require('../utils/errors.js');
 const User = db.User;
 
 
@@ -15,6 +15,8 @@ async function authenticate({ username, password }) {
             ...userWithoutHash,
             token
         };
+    } else {
+        throw new UnauthorizedError("Wrong username or password");
     }
 }
 

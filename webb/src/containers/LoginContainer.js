@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import autobind from 'react-autobind';
+import { Redirect } from 'react-router';
 
 import userActions from '../actions/userActions';
 
@@ -11,7 +12,8 @@ class LoginContainer extends Component {
 
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            toRegister : false
         }
 
         autobind(this)
@@ -31,7 +33,16 @@ class LoginContainer extends Component {
         this.props.dispatch(userActions.login(username, password));
     }
 
+
     render() {
+
+        if(this.props.loggedIn){  
+            return <Redirect push to="/" />;
+        }
+
+        if(this.state.toRegister){  
+            return <Redirect push to="/register" />;
+        }
 
         const { username, password } = this.state
         return (
@@ -56,6 +67,9 @@ class LoginContainer extends Component {
 
                                 <button type="submit" className="btn-dark btn-lg btn-block"
                                     onClick={this.onLogin}>Login</button>
+
+                                <button type="submit" className="btn-dark btn-lg btn-block"
+                                    onClick={() =>  this.setState({toRegister: true})}>Register</button>    
                             </form>
                         </div>
                     </div>
@@ -68,9 +82,9 @@ class LoginContainer extends Component {
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
+    const { loggedIn } = state.authentication;
     return {
-        loggingIn
+        loggedIn
     };
 }
 
