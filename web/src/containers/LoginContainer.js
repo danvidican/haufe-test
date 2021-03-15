@@ -11,9 +11,11 @@ class LoginContainer extends Component {
         super(props)
 
         this.state = {
-            username: "",
-            password: "",
-            toRegister : false
+            username: "vid.dan@gmail.com",
+            password: "maria123",
+            toRegisterRestaurant: false,
+            toRegisterCustomer: false,
+            loginFailed: false,
         }
 
         autobind(this)
@@ -31,6 +33,7 @@ class LoginContainer extends Component {
         event.preventDefault()
         const { username, password } = this.state
         this.props.dispatch(userActions.login(username, password));
+        this.setState({loginFailed: true});
     }
 
 
@@ -40,11 +43,16 @@ class LoginContainer extends Component {
             return <Redirect push to="/" />;
         }
 
-        if(this.state.toRegister){  
-            return <Redirect push to="/register" />;
+        if(this.state.toRegisterRestaurant){  
+            return <Redirect push to="/registerRestaurant" />;
+        }
+
+        if(this.state.toRegisterCustomer){  
+            return <Redirect push to="/registerCustomer" />;
         }
 
         const { username, password } = this.state
+        const borderColor = this.state.loginFailed ? "red" : "";
         return (
             <div>
                 <div id="login">
@@ -56,12 +64,14 @@ class LoginContainer extends Component {
                                 <div className="form-group">
                                     <label>Username</label>
                                     <input type="email" className="form-control" aria-describedby="emailHelp" placeholder="Enter username" value={username}
+                                        style = {{borderColor: borderColor.toString() }}    
                                         onChange={this.onUserNameChange} />
                                 </div>
 
                                 <div className="form-group">
                                     <label>Password</label>
                                     <input type="password" className="form-control" placeholder="Password" value={password}
+                                        style = {{borderColor: borderColor.toString() }}  
                                         onChange={this.onPasswordChange} />
                                 </div>
 
@@ -69,7 +79,11 @@ class LoginContainer extends Component {
                                     onClick={this.onLogin}>Login</button>
 
                                 <button type="submit" className="btn-dark btn-lg btn-block"
-                                    onClick={() =>  this.setState({toRegister: true})}>Register</button>    
+                                    onClick={() => this.setState({ toRegisterRestaurant: true })}>Register as Restaurant</button>
+
+                                <button type="submit" className="btn-dark btn-lg btn-block"
+                                    onClick={() => this.setState({ toRegisterCustomer: true })}>Register as Customer</button>
+                                    
                             </form>
                         </div>
                     </div>

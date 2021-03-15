@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import userActions from '../actions/userActions';
 import autobind from 'react-autobind';
+import { Redirect } from 'react-router';
 
 import DynamicSelect from "../components/DynamicSelect";
 
@@ -60,46 +61,24 @@ class UsersPanelContainer extends Component {
 
   render() {
     const users = this.props.users ? this.props.users.users : [];
-    const { username, password } = this.state;
+   
+    if(!this.props.authentication.loggedIn){
+      return <Redirect push to="/login" />;
+    }
     return (
       <div>
         <h1>UserPanelContainer</h1>
 
         <p style={{ fontSize: "15" }}>
           <DynamicSelect arrayOfData={users} onSelectChange={this.handleSelectChange} /> <br /><br />
-          <div>
+          
             Selected value: {this.state.selectedValue}
-          </div>
         </p>
 
         <button type="submit" className="btn-dark btn-lg btn-block"
           onClick={this.onDelete}> Delete Selected User
         </button>
 
-        <div id="login">
-          <div className="container">
-            <h1 className="text-center">Register External </h1>
-            <div className="login-form-container">
-              <hr />
-              <form>
-                <div className="form-group">
-                  <label>Username</label>
-                  <input type="email" className="form-control" aria-describedby="emailHelp" placeholder="Enter username" value={username}
-                    onChange={this.onUsernameChange} />
-                </div>
-
-                <div className="form-group">
-                  <label>Password</label>
-                  <input type="password" className="form-control" placeholder="Password" value={password}
-                    onChange={this.onPasswordChange} />
-                </div>
-
-                <button type="submit" className="btn-dark btn-lg btn-block"
-                  onClick={this.onRegister}>Register</button>
-              </form>
-            </div>
-          </div>
-        </div>
 
 
         <button type="submit" className="btn-dark btn-lg btn-block"
@@ -113,8 +92,10 @@ class UsersPanelContainer extends Component {
 
 function mapStateToProps(state) {
   const { users: { users } } = state;
+  const authentication = state.authentication
   return {
-    users
+    users,
+    authentication,
   };
 }
 

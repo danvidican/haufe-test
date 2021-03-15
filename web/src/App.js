@@ -6,7 +6,9 @@ import { history, isInternal } from './helpers';
 
 import Home from "./containers/HomeContainer.js";
 import LoginContainer from "./containers/LoginContainer.js";
-import RegisterContainer from "./containers/RegisterContainer";
+import RegisterRestaurantContainer from "./containers/RegisterRestaurantContainer";
+import RegisterCustomerContainer from "./containers/RegisterCustomerContainer";
+
 import UsersPanelContainer from "./containers/UsersPanelContainer";
 import NotFound from "./containers/NotFound";
 
@@ -41,7 +43,8 @@ export default class App extends Component {
           <Switch>
             <PrivateRoute path='/' exact component={Home} />
             <PublicRoute path='/login' exact component={LoginContainer} />
-            <PublicRoute path='/register' exact component={RegisterContainer} />
+            <PublicRoute path='/registerRestaurant' exact component={RegisterRestaurantContainer} />
+            <PublicRoute path='/registerCustomer' exact component={RegisterCustomerContainer} />
             <InternalRoute path='/internal' exact component={UsersPanelContainer} />
             <PublicRoute component={NotFound} /> 
           </Switch>

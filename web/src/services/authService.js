@@ -1,23 +1,24 @@
 
 
 const config = {
-    apiUrl: "http://localhost:8080"
+    apiUrl: "http://localhost:8080/api/v1"
 }
 
 function login(username, password) {
+    const email = username;
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
     };
 
-    return fetch(`${config.apiUrl}/users/login`, requestOptions)
+    return fetch(`${config.apiUrl}/login`, requestOptions)
         .then(response => {
-            if (response.status === 401) {
-                throw Error('Request was rejected with status' + 401);
+            if (response.status !== 200) {
+                throw Error('Request was rejected with status' + response.status);
             }
             return response.json()
         })
@@ -27,17 +28,35 @@ function login(username, password) {
         })
 }
 
-function register(username, password, role = 'internal') {
+function registerRestaurant(email, password, name, description, location, openHour, closeHour) {
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify({ username, password, role })
+        body: JSON.stringify({ email, password, name, description, location, openHour, closeHour })
     };
 
-    return fetch(`${config.apiUrl}/users/register`, requestOptions)
+    return fetch(`${config.apiUrl}/restaurants/registerRestaurant`, requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                throw Error('Request was rejected with status' + response.status);
+            }
+        })
+}
+
+function registerCustomer(email, password, name, phone_number, address) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ email, password, name, phone_number, address })
+    };
+
+    return fetch(`${config.apiUrl}/customers/registerCustomer`, requestOptions)
         .then(response => {
             if (!response.ok) {
                 throw Error('Request was rejected with status' + response.status);
@@ -47,13 +66,12 @@ function register(username, password, role = 'internal') {
 
 function deleteUser(userId) {
     const token = JSON.parse(localStorage.getItem('user')).token;
-    console.log("delet=>> " + userId);
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'x-auth-token': token
+            'Authentication': token
         }   
     };
 
@@ -93,7 +111,8 @@ function getAll() {
 
 export default {
     login,
-    register,
+    registerRestaurant,
+    registerCustomer,
     logout,
     getAll,
     deleteUser

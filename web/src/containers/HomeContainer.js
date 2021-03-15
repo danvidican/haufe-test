@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
 import userActions from '../actions/userActions';
 import autobind from 'react-autobind';
@@ -19,6 +20,10 @@ import autobind from 'react-autobind';
   }
 
   render() {
+    
+    if(!this.props.loggedIn){
+      return <Redirect push to="/login" />;
+    }
     return (
       <div>
         <h1>Home</h1>
@@ -34,8 +39,11 @@ import autobind from 'react-autobind';
 
 function mapStateToProps(state) {
   const {dispatch} = state
+  const { loggedIn } = state.authentication;
+
   return {
-    dispatch
+    dispatch,
+    loggedIn
   };
 }
 

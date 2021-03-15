@@ -5,7 +5,8 @@ const userActions = {
     login,
     logout,
     getAll,
-    register,
+    registerRestaurant,
+    registerCustomer,
     deleteUser
 };
 
@@ -30,16 +31,26 @@ function login(username, password) {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-function register(username, password, role = 'internal') {
+function registerRestaurant(email, password, name, description, location, openHour, closeHour) {
     return dispatch => {
-        userService.register(username, password, role)
+        userService.registerRestaurant(email, password, name, description, location, openHour, closeHour)
             .then(resp => {
             })
             .catch(error => {
                 console.log("error at register action"+ error);
             });
     };
+}
 
+function registerCustomer(email, password, name, phone_number, address) {
+    return dispatch => {
+        userService.registerCustomer(email, password, name, phone_number, address)
+            .then(resp => {
+            })
+            .catch(error => {
+                console.log("error at register action"+ error);
+            });
+    };
 }
 
 function deleteUser(userId) {
